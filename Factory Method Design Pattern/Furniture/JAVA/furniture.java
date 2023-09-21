@@ -52,7 +52,7 @@ class TableFactory implements FurnitureFactory {
     }
 }
 
-public class Main {
+public class furniture {
     public static void main(String[] args) {
         // Create factories for different types of furniture
         FurnitureFactory sofaFactory = new SofaFactory();
