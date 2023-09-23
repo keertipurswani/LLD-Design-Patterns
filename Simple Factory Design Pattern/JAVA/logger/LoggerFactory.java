@@ -1,7 +1,7 @@
 package logger;
 
 public class LoggerFactory {
-    public static Logger createLogger(LogLevel logLevel) {
+    public static ILogger createLogger(LogLevel logLevel) {
         switch(logLevel) {
             case DEBUG:
                 return new DebugLogger();

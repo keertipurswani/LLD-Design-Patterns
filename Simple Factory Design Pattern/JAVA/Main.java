@@ -3,9 +3,9 @@ import logger.*;
 
 public class Main {
     public static void main(String[] args) {
-        Logger debugLogger = LoggerFactory.createLogger(LogLevel.DEBUG);
-        Logger infoLogger = LoggerFactory.createLogger(LogLevel.INFO);
-        Logger errorLogger = LoggerFactory.createLogger(LogLevel.ERROR);
+        ILogger debugLogger = LoggerFactory.createLogger(LogLevel.DEBUG);
+        ILogger infoLogger = LoggerFactory.createLogger(LogLevel.INFO);
+        ILogger errorLogger = LoggerFactory.createLogger(LogLevel.ERROR);
 
         debugLogger.log("This is a debug log msg");
         infoLogger.log("This is an info log msg");
