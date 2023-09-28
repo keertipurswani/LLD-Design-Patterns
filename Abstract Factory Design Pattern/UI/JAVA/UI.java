@@ -72,6 +72,7 @@ class GUIAbstractFactory {
         } else if (osType.equals("mac")) {
             return new MacFactory();
         }
+        
         return null;
     }
 }
