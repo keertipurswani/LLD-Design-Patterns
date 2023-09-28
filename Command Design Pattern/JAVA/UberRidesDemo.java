@@ -58,7 +58,7 @@ class RideRequestInvoker {
     }
 }
 
-public class UberRides {
+public class UberRidesDemo {
     public static void main(String[] args) {
         // Create a receiver
         RideService rideService = new RideService();
