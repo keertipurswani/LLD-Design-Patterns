@@ -1,3 +1,4 @@
+import java.util.*;
 
 //Command Interface
 interface ActionListenerCommand {
@@ -43,37 +44,39 @@ class ActionSave implements ActionListenerCommand {
     }
 }
 
-//Invoker
+// Invoker
 class MenuOptions {
-    private ActionListenerCommand openCommand;
-    private ActionListenerCommand saveCommand;
+    private List<ActionListenerCommand> commands = new ArrayList<>();
 
-    public MenuOptions(ActionListenerCommand openCommand, ActionListenerCommand saveCommand) {
-        this.openCommand = openCommand;
-        this.saveCommand = saveCommand;
+    public void addCommand(ActionListenerCommand command) {
+        commands.add(command);
     }
 
-    public void clickOpen() {
-        openCommand.execute();
-    }
-
-    public void clickSave() {
-        saveCommand.execute();
+    public void executeCommands() {
+        for (ActionListenerCommand command : commands) {
+            command.execute();
+        }
     }
 }
 
-public class DocumentDemo
- {
+public class DocumentDemo {
     public static void main(String[] args) {
-        Document doc = new Document();
+        Document doc = new Document(); // Receiver - performing action
 
+        // Create concrete commands
+        // Receiver with command
         ActionListenerCommand clickOpen = new ActionOpen(doc);
         ActionListenerCommand clickSave = new ActionSave(doc);
 
-        MenuOptions menu = new MenuOptions(clickOpen, clickSave);
+        // Invoker
+        MenuOptions menu = new MenuOptions();
 
-        menu.clickOpen();
-        menu.clickSave();
+        // Client code only adds commands to the menu
+        menu.addCommand(clickOpen);
+        menu.addCommand(clickSave);
+
+        menu.executeCommands();
     }
 }
+
 

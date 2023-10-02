@@ -6,6 +6,7 @@ using namespace std;
 class ActionListenerCommand {
 public:
     virtual void execute() = 0;
+    virtual ~ActionListenerCommand() {}
 };
 
 // Receiver - performing the operation
@@ -28,7 +29,7 @@ private:
 public:
     ActionOpen(Document* document) : doc(document) {}
 
-    void execute() override {
+    void execute() {
         doc->open();
     }
 };
@@ -41,7 +42,7 @@ private:
 public:
     ActionSave(Document* document) : doc(document) {}
 
-    void execute() override {
+    void execute() {
         doc->save();
     }
 };
@@ -49,32 +50,33 @@ public:
 // Invoker
 class MenuOptions {
 private:
-    ActionListenerCommand* openCommand;
-    ActionListenerCommand* saveCommand;
+    vector<ActionListenerCommand*> commands;
 
 public:
-    MenuOptions(ActionListenerCommand* openCmd, ActionListenerCommand* saveCmd)
-        : openCommand(openCmd), saveCommand(saveCmd) {}
-
-    void clickOpen() {
-        openCommand->execute();
+    void addCommand(ActionListenerCommand* command) {
+        commands.push_back(command);
     }
 
-    void clickSave() {
-        saveCommand->execute();
+    void executeCommands() {
+        for (ActionListenerCommand* command : commands) {
+            command->execute();
+        }
     }
 };
 
 int main() {
     Document doc;
+    MenuOptions menu;
 
     ActionListenerCommand* clickOpen = new ActionOpen(&doc);
     ActionListenerCommand* clickSave = new ActionSave(&doc);
 
-    MenuOptions menu(clickOpen, clickSave);
-
-    menu.clickOpen();
-    menu.clickSave();
+    menu.addCommand(clickOpen);
+    menu.addCommand(clickSave);
+    
+    // Client code only adds commands to the menu
+    // The invoker (menu) doesn't need to change when new commands are added
+    menu.executeCommands();
 
     delete clickOpen;
     delete clickSave;
